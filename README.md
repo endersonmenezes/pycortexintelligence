@@ -1,4 +1,11 @@
 # WIP: PY Cprtex Intelligence
 
-SDK para auxiliar o input de dados na Plataforma do Cortex.
+## How to build locale
+```shell
+python setup.py bdist_wheel
+```
 
+## How to update on PIP
+```
+python -m twine upload  dist/*
+```
