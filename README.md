@@ -1,5 +1,10 @@
 # WIP: PY Cprtex Intelligence
 
+## Prepare your ambient
+```shell
+pip install -r requirements.txt
+```
+
 ## How to build locale
 ```shell
 python setup.py bdist_wheel
