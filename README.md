@@ -29,3 +29,6 @@ cortexfunctions.upload_to_cortex(
 - [ ] Document Build
 - [ ] Document Usage
 - [ ] Create a CLI for testing
+- [ ] How to contrib
+- [ ] Contributors
+- [ ] API Coverage Expand
