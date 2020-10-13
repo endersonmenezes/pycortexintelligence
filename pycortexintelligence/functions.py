@@ -125,7 +125,7 @@ def upload_to_cortex(cubo_id, file_path, url_da_plataforma, login, senha):
     :return:
     """
 
-    auth_endpoint = "https://{}}/service/integration-authorization-service.login".format(url_da_plataforma)
+    auth_endpoint = "https://{}/service/integration-authorization-service.login".format(url_da_plataforma)
     credentials = {"login": str(login), "password": senha}
     execution_id, headers = upload_local_2_cube(
         cubo_id, file_path, auth_endpoint, credentials
