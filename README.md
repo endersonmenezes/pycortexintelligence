@@ -18,9 +18,9 @@ from pycortexintelligence import functions as cortexfunctions
 cortexfunctions.upload_to_cortex(
     cubo_id='',
     file_path='',
-    url_da_plataforma='CLIENTE.cortex-intelligence.com',
-    login='',
-    senha='',
+    plataform_url='CLIENTE.cortex-intelligence.com',
+    username='',
+    password='',
 )
 ```
 

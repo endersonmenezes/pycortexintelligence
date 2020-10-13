@@ -115,20 +115,30 @@ def upload_local_2_cube(cubo_id, file_path, auth_endpoint, credentials,
     return execution_id, headers
 
 
-def upload_to_cortex(cubo_id, file_path, url_da_plataforma, login, senha):
+def upload_to_cortex(**kwargs):
     """
     :param cubo_id:
     :param file_path:
-    :param url_da_plataforma:
-    :param login:
-    :param senha:
+    :param plataform_url:
+    :param username:
+    :param password:
     :return:
     """
+    # Read Kwargs
+    cubo_id = kwargs.get('cubo_id')
+    file_path = kwargs.get('file_path')
+    plataform_url = kwargs.get('plataform_url')
+    username = kwargs.get('username')
+    password = kwargs.get('password')
 
-    auth_endpoint = "https://{}/service/integration-authorization-service.login".format(url_da_plataforma)
-    credentials = {"login": str(login), "password": senha}
-    execution_id, headers = upload_local_2_cube(
-        cubo_id, file_path, auth_endpoint, credentials
-    )
-    response = _execution_history(execution_id, LOADMANAGER, headers)
-    return response
+    # Verify Kwargs
+    if cubo_id and file_path and plataform_url and username and password:
+        auth_endpoint = "https://{}/service/integration-authorization-service.login".format(plataform_url)
+        credentials = {"login": str(username), "password": str(password)}
+        execution_id, headers = upload_local_2_cube(
+            cubo_id, file_path, auth_endpoint, credentials
+        )
+        response = _execution_history(execution_id, LOADMANAGER, headers)
+        return response
+    else:
+        raise ValueError('Error validating arguments.')
