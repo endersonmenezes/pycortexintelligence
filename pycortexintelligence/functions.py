@@ -115,18 +115,17 @@ def upload_local_2_cube(cubo_id, file_path, auth_endpoint, credentials,
     return execution_id, headers
 
 
-def upload_to_cortex(cubo_id, file_path, url_da_plataforma, login, senha):
+def upload_to_cortex(cubo_id, file_path, plataform_url, username, password):
     """
     :param cubo_id:
     :param file_path:
-    :param url_da_plataforma:
+    :param plataform_url:
     :param login:
     :param senha:
     :return:
     """
-
-    auth_endpoint = "https://{}/service/integration-authorization-service.login".format(url_da_plataforma)
-    credentials = {"login": str(login), "password": senha}
+    auth_endpoint = "https://{}/service/integration-authorization-service.login".format(plataform_url)
+    credentials = {"login": str(username), "password": str(password)}
     execution_id, headers = upload_local_2_cube(
         cubo_id, file_path, auth_endpoint, credentials
     )
