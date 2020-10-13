@@ -120,8 +120,8 @@ def upload_to_cortex(cubo_id, file_path, plataform_url, username, password):
     :param cubo_id:
     :param file_path:
     :param plataform_url:
-    :param login:
-    :param senha:
+    :param username:
+    :param password:
     :return:
     """
     auth_endpoint = "https://{}/service/integration-authorization-service.login".format(plataform_url)
