@@ -1,4 +1,19 @@
 # WIP: PY Cprtex Intelligence
+## Last Release Notes
+
+v.0.0.5
+
+- added support to data_format on upload_to_cortex
+
+```python
+dafault_data_format = {
+    "charset": "UTF-8",
+    "quote": "\"",
+    "escape": "\/\/",
+    "delimiter": ",",
+    "fileType": "CSV"
+}
+```
 
 ## Prepare your ambient
 ```shell
@@ -26,6 +41,7 @@ cortexfunctions.upload_to_cortex(
     plataform_url='CLIENTE.cortex-intelligence.com',
     username='',
     password='',
+    data_format=''
 )
 ```
 
