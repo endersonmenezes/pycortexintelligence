@@ -1,4 +1,4 @@
-# WIP: PY Cprtex Intelligence
+# WIP: PY Cortex Intelligence
 ## Last Release Notes
 
 v.0.0.5
