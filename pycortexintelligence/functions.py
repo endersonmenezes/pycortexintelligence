@@ -122,6 +122,13 @@ def upload_to_cortex(**kwargs):
     :param plataform_url:
     :param username:
     :param password:
+    :param data_format: data_format={
+                            "charset": "UTF-8",
+                            "quote": "\"",
+                            "escape": "\/\/",
+                            "delimiter": ",",
+                            "fileType": "CSV"
+                            }
     :return:
     """
     # Read Kwargs
@@ -130,13 +137,18 @@ def upload_to_cortex(**kwargs):
     plataform_url = kwargs.get('plataform_url')
     username = kwargs.get('username')
     password = kwargs.get('password')
+    data_format = kwargs.get('data_format', {"charset": "UTF-8",
+                                             "quote": "\"",
+                                             "escape": "\/\/",
+                                             "delimiter": ",",
+                                             "fileType": "CSV"})
 
     # Verify Kwargs
     if cubo_id and file_path and plataform_url and username and password:
         auth_endpoint = "https://{}/service/integration-authorization-service.login".format(plataform_url)
         credentials = {"login": str(username), "password": str(password)}
         execution_id, headers = upload_local_2_cube(
-            cubo_id, file_path, auth_endpoint, credentials
+            cubo_id, file_path, auth_endpoint, credentials, data_format
         )
         response = _execution_history(execution_id, LOADMANAGER, headers)
         return response
