@@ -1,7 +1,10 @@
 # WIP: PY Cprtex Intelligence
-## Last Release Notes
+## Release Notes
 
-v.0.0.5
+**v.0.0.6**
+- fix bug with calling _upload_local_2_cube_ function.
+
+**v.0.0.5**
 
 - added support to data_format on upload_to_cortex
 

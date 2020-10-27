@@ -148,7 +148,11 @@ def upload_to_cortex(**kwargs):
         auth_endpoint = "https://{}/service/integration-authorization-service.login".format(plataform_url)
         credentials = {"login": str(username), "password": str(password)}
         execution_id, headers = upload_local_2_cube(
-            cubo_id, file_path, auth_endpoint, credentials, data_format
+            cubo_id=cubo_id,
+            file_path=file_path,
+            auth_endpoint=auth_endpoint,
+            credentials=credentials,
+            data_format=data_format
         )
         response = _execution_history(execution_id, LOADMANAGER, headers)
         return response
