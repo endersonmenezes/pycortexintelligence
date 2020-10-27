@@ -1,4 +1,5 @@
 # WIP: PY Cortex Intelligence
+
 ## Release Notes
 
 **v.0.0.6**
@@ -16,6 +17,11 @@ dafault_data_format = {
     "delimiter": ",",
     "fileType": "CSV"
 }
+```
+
+## Prepare your ambient
+```shell
+pip install -r requirements.txt
 ```
 
 ## How to build locale
@@ -48,3 +54,6 @@ cortexfunctions.upload_to_cortex(
 - [ ] Document Build
 - [ ] Document Usage
 - [ ] Create a CLI for testing
+- [ ] How to contrib
+- [ ] Contributors
+- [ ] API Coverage Expand
