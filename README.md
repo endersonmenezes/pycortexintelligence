@@ -1,6 +1,9 @@
 # WIP: PY Cortex Intelligence
 ## Release Notes
 
+**v.0.0.7**
+- creating a CLI for pycortexintelligence --> cortex.py
+
 **v.0.0.6**
 - fix bug with calling _upload_local_2_cube_ function.
 
@@ -43,8 +46,22 @@ cortexfunctions.upload_to_cortex(
 )
 ```
 
+## CLI Usage
+```bash
+cortex.py --help
+```
+
+### Examples
+
+```bash
+cortex.py startproject --name "Project Name" --sname project_name
+```
+
 ## TO DO
 
-- [ ] Document Build
-- [ ] Document Usage
-- [ ] Create a CLI for testing
+- [X] Document Build
+- [X] Document Usage
+- [X] Create a CLI for testing
+- [ ] Create tool to send task for amazon
+- [ ] Improve CLI
+- [ ] Improve Documentation
