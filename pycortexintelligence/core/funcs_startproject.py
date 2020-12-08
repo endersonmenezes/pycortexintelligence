@@ -35,11 +35,11 @@ logging.info(messages.OS_PARAMS_CORRECT)
 
 # Checa os diretórios temporários
 check_dirs()
-loggins.info(TEMP_DIRS)
+logging.info(messages.TEMP_DIRS)
 
 # Deleta os arquivos temporários e de output.
 delete_temp_files(os_params=OS_PARAMS)
-logging.info(TEMP_DIRS_EMPTY)
+logging.info(messages.TEMP_DIRS_EMPTY)
 
 # TODO Define a project!
 """
@@ -352,7 +352,7 @@ def check_create_dirs():
 
 def creck_create_files(project_name, safe_name):
     for file in FILES:
-        with open(file, 'w', 'utf-8') as f:
+        with open(file, mode='w', encoding='utf-8') as f:
             if file == 'README.md':
                 file_to_write = write_readme_md(project_name, safe_name)
                 print('Writing README.md file...')
