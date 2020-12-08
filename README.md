@@ -4,6 +4,7 @@
 - using logging module
 - update on file creation to `utf-8`
 - create core/messages.py file
+- update README.md
 
 **v.0.0.7**
 - creating a CLI for pycortexintelligence --> cortex.py
@@ -71,11 +72,12 @@ cortex.py --help
 cortex.py startproject --name "Project Name" --sname project_name
 ```
 
-## TO DO
+## How to Contribute
 
-- [X] Document Build
-- [X] Document Usage
-- [X] Create a CLI for testing
-- [ ] Create tool to send task for amazon
-- [ ] Improve CLI
-- [ ] Improve Documentation
+### Developers
+
+Developers can access our development manual by clicking here. (Manual not yet available)
+
+### Community
+
+You can create a new Issue [clicking here](issues/new/choose), and we will start a description about the reported Bug or Feature. 
