@@ -27,6 +27,7 @@ dafault_data_format = {
 
 ## How to build locale
 ```shell
+pip install wheel
 python setup.py bdist_wheel
 ```
 
