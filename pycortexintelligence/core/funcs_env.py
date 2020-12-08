@@ -3,10 +3,25 @@
 
 import os
 import shutil
+from pycortexintelligence.core.messages import *
 from pycortexintelligence.core.funcs_mail import error_message
-from pycortexintelligence.core.config import OUTPUT_FOLDER, DOWNLOADED_FOLDER, PARAMS_TO_CHECK
+from pycortexintelligence.core.config import OUTPUT_FOLDER, DOWNLOADED_FOLDER, PARAMS_TO_CHECK, LOG_FILE
 
 FOLDERS = [OUTPUT_FOLDER, DOWNLOADED_FOLDER]
+
+FILES = [LOG_FILE]
+
+
+def __delete_file(file_path, os_params):
+    try:
+        if os.path.isfile(file_path) or os.path.islink(file_path):
+            os.unlink(file_path)
+        elif os.path.isdir(file_path):
+            shutil.rmtree(file_path)
+    except Exception as e:
+        except_text = 'Failed to delete %s. Reason: %s' % (file_path, e)
+        error_message(except_text, os_params)
+        raise 'Failed to delete %s. Reason: %s' % (file_path, e)
 
 
 def load_env_to_dict(new_params_to_check: list):
@@ -31,8 +46,7 @@ def verify_env(os_params: dict, new_params_to_check: list):
     final_check = new_params_to_check + PARAMS_TO_CHECK
     for key in final_check:
         if os_params[key] is None:
-            message_text = "Tivemos um erro ao verificar as varíaveis de ambiente. \n" \
-                           "A variável {} não foi encontrada.".format(key)
+            message_text = mail_variable_error(key)
             error_message(message_text=message_text, os_params=os_params)
             raise ValueError('Não conseguimos validar a chave: {}, nas variaveis de ambiente'.format(key))
 
@@ -49,12 +63,6 @@ def delete_temp_files(os_params):
     for folder in FOLDERS:
         for filename in os.listdir(folder):
             file_path = os.path.join(folder, filename)
-            try:
-                if os.path.isfile(file_path) or os.path.islink(file_path):
-                    os.unlink(file_path)
-                elif os.path.isdir(file_path):
-                    shutil.rmtree(file_path)
-            except Exception as e:
-                except_text = 'Failed to delete %s. Reason: %s' % (file_path, e)
-                error_message(except_text, os_params)
-                raise 'Failed to delete %s. Reason: %s' % (file_path, e)
+            __delete_file(file_path, os_params)
+    for file in FILES:
+        __delete_file(file, os_params)

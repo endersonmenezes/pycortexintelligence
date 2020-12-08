@@ -5,6 +5,7 @@ import smtplib
 import ssl
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from pycortexintelligence.core import messages
 
 
 def send_email_function(server, port, user_from, password, message_text, subject, user_to):
@@ -48,6 +49,6 @@ def error_message(message_text, os_params):
         user_from=os_params['email_user'],
         user_to=os_params['email_to_error'],
         password=os_params['email_password'],
-        subject='Projeto: {} | Erro Encontrado'.format(os_params['project_name']),
+        subject=messages.EMAIL_PROJECT_ERROR_SUBJECT.format(os_params['project_name']),
         message_text=message_text,
     )

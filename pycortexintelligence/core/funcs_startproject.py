@@ -14,22 +14,32 @@ FILES = [
 
 
 def write_main_py():
-    return """from pycortexintelligence.core.funcs_env import load_env_to_dict, verify_env, delete_temp_files
+    return """from pycortexintelligence.core.funcs_env import load_env_to_dict, verify_env, delete_temp_files, check_dirs
+from pycortexintelligence.core.config import OUTPUT_FOLDER, DOWNLOADED_FOLDER, LOG_FILE
+from pycortexintelligence.core import messages
+import logging
+
+# Cria arquivo de LOG
+logging.basicConfig(filename=LOG_FILE, encoding='utf-8', level=logging.DEBUG, format='%(asctime)s %(message)s')
 
 # Set specific variables to project
 custom_variables = ['variable_1', 'variable_2']
 
 # Script para pegar automaticamente as variavéis de ambiente.
 OS_PARAMS = load_env_to_dict(new_params_to_check=custom_variables)
-print('Criamos as variavéis de ambiente...')
+logging.info(messages.VARIABLES_CREATED)
 
 # Valida se o OS_PARAMS está correto para esse projeto.
 verify_env(OS_PARAMS, new_params_to_check=custom_variables)
-print('Tudo indica sucesso para essa operação soldade, vamos que vamos! :)')
+logging.info(messages.OS_PARAMS_CORRECT)
+
+# Checa os diretórios temporários
+check_dirs()
+loggins.info(TEMP_DIRS)
 
 # Deleta os arquivos temporários e de output.
 delete_temp_files(os_params=OS_PARAMS)
-print('Deletamos os arquivos temporários, só pra prevenir né rs rs')
+logging.info(TEMP_DIRS_EMPTY)
 
 # TODO Define a project!
 """
@@ -54,9 +64,8 @@ ENV plataform_password=""
 ENV plataform_cube_id=""
 
 # Arguments of Project
-ENV param_s3_bucket=""
-ENV param_s3_key=""
-ENV param_s3_secret_key=""
+ENV variable_1=""
+ENV variable_2=""
 
 # Set environment variables
 ENV PYTHONUNBUFFERED 1
@@ -76,7 +85,7 @@ RUN mkdir -p /code
 WORKDIR /code
 
 # Copy project code.
-COPY ./ /code/
+COPY . /code/
 
 # Install dependencies.
 RUN pip install -r requirements.txt
@@ -96,6 +105,8 @@ plataform_url=""
 plataform_username=""
 plataform_password=""
 plataform_cube_id=""
+variable_1=""
+variable_2=""
 """.format(project_name)
 
 
@@ -104,6 +115,7 @@ def write_dockerignore():
 # Arquivos Temporárops e de Output
 downloaded_files/*
 output/*
+historico.log
 """
 
 
@@ -264,7 +276,7 @@ dmypy.json
 def write_readme_md(project_name, safe_name):
     return """# {}
 
-**URL DO CONNECTOR:** ``
+**URL DO CONNECTOR:** `INSERIR URL DA TASK DENTRO DO ECS` 
 
 **CUBO:** -
 
@@ -274,17 +286,11 @@ def write_readme_md(project_name, safe_name):
 
 **CLIENTE:** -
 
-**DATA CONNECTION:** -
+**DATA CONNECTION:** `INSERIR URL DO CLUSTER DO ECS`
 
-**DATA SOURCE:** ``
+**DATA SOURCE:** `INSERIR URL DO ECR (Repositório GIT)`
 
-**CARGA TOTAL:** -
-
-**CARGA INCREMENTAL:** -
-
-**APAGA DADOS DO DESTINO:** -
-
-**APAGA SOMENTE SE EXISTIREM NOVOS DADOS:** -
+**CARGA:** `CARGA REALIZADA VIA SID (PyCortexIntelligence)`
 
 **CAMPOS ASSOCIADOS:**
 
@@ -346,7 +352,7 @@ def check_create_dirs():
 
 def creck_create_files(project_name, safe_name):
     for file in FILES:
-        with open(file, 'w') as f:
+        with open(file, 'w', 'utf-8') as f:
             if file == 'README.md':
                 file_to_write = write_readme_md(project_name, safe_name)
                 print('Writing README.md file...')
