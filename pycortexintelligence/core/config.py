@@ -3,6 +3,7 @@
 
 DOWNLOADED_FOLDER = 'downloaded_files/'
 OUTPUT_FOLDER = 'output/'
+LOG_FILE = 'historico.log'
 
 PARAMS_TO_CHECK = [
     # Parametros Padrão para Envio de E-mail

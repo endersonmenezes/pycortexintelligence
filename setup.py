@@ -5,11 +5,11 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pycortexintelligence",
-    version="0.0.7",
+    version="0.0.8",
     author="Enderson Menezes",
     scripts=["cortex.py"],
     author_email="endersonster@gmail.com",
-    description="Cortex Intelligence Platform integration package.",
+    description="Cortex Intelligence Platform Python SDK",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/endersonmenezes/pycortexintelligence",

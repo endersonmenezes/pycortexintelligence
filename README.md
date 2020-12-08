@@ -1,5 +1,9 @@
 # WIP: PY Cortex Intelligence
 ## Release Notes
+**v.0.0.8**
+- using logging module
+- update on file creation to `utf-8`
+- create core/messages.py file
 
 **v.0.0.7**
 - creating a CLI for pycortexintelligence --> cortex.py
@@ -35,6 +39,15 @@ python -m twine upload  dist/*
 ```python
 from pycortexintelligence import functions as cortexfunctions
 
+# DataFormat are Optionally defined
+dafault_data_format = {
+    "charset": "UTF-8",
+    "quote": "\"",
+    "escape": "\/\/",
+    "delimiter": ",",
+    "fileType": "CSV"
+}
+
 # Upload to Cortex
 cortexfunctions.upload_to_cortex(
     cubo_id='',
@@ -42,7 +55,7 @@ cortexfunctions.upload_to_cortex(
     plataform_url='CLIENTE.cortex-intelligence.com',
     username='',
     password='',
-    data_format=''
+    data_format=dafault_data_format
 )
 ```
 

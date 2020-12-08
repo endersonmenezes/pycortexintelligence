@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import os
-import shutil
 import pkg_resources
 import click
 from pycortexintelligence.core import funcs_startproject
