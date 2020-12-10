@@ -1,5 +1,8 @@
-# WIP: PY Cortex Intelligence
+# Py Cortex Intelligence 
 ## Release Notes
+**v.0.0.9**
+- adding developer guidelines to contributions
+
 **v.0.0.8**
 - using logging module
 - update on file creation to `utf-8`
@@ -76,7 +79,7 @@ cortex.py startproject --name "Project Name" --sname project_name
 
 ### Developers
 
-Developers can access our development manual by clicking here. (Manual not yet available)
+Developers can access our development manual by [clicking here](CONTRIBUTING.md).
 
 ### Community
 
