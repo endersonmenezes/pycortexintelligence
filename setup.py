@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pycortexintelligence",
-    version="0.0.8",
+    version="0.0.9",
     author="Enderson Menezes",
     scripts=["cortex.py"],
     author_email="endersonster@gmail.com",

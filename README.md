@@ -1,33 +1,7 @@
 # Py Cortex Intelligence 
+
 ## Release Notes
-**v.0.0.9**
-- adding developer guidelines to contributions
-
-**v.0.0.8**
-- using logging module
-- update on file creation to `utf-8`
-- create core/messages.py file
-- update README.md
-
-**v.0.0.7**
-- creating a CLI for pycortexintelligence --> cortex.py
-
-**v.0.0.6**
-- fix bug with calling _upload_local_2_cube_ function.
-
-**v.0.0.5**
-
-- added support to data_format on upload_to_cortex
-
-```python
-dafault_data_format = {
-    "charset": "UTF-8",
-    "quote": "\"",
-    "escape": "\/\/",
-    "delimiter": ",",
-    "fileType": "CSV"
-}
-```
+Need to consult the history of our project? [Click Here](CHANGELOG.md)
 
 ## How to build locale
 ```shell
@@ -40,7 +14,9 @@ python setup.py bdist_wheel
 python -m twine upload  dist/*
 ```
 
-## How to use
+## Cases of Use
+
+### If you need upload a file to Cortex Application
 ```python
 from pycortexintelligence import functions as cortexfunctions
 
@@ -57,10 +33,45 @@ dafault_data_format = {
 cortexfunctions.upload_to_cortex(
     cubo_id='',
     file_path='',
-    plataform_url='CLIENTE.cortex-intelligence.com',
+    plataform_url='CLIENT.cortex-intelligence.com',
     username='',
     password='',
     data_format=dafault_data_format
+)
+```
+
+### If you need download file from Cortex Application
+```python
+from pycortexintelligence import functions as cortexfunctions
+
+# DataFormat are Optionally defined
+dafault_data_format = {
+    "charset": "UTF-8",
+    "quote": "\"",
+    "escape": "\/\/",
+    "delimiter": ",",
+}
+
+# Select the headers from file
+columns = ['Name of Column A', 'Name of Column B']
+
+# OPTIONAL Filters
+filters = [
+    ['Name of Column A', 'Value'],
+    ['Name of Column B', 'dd/mm/YYYY'],
+    ['Name of Column B', 'dd/mm/YYYY-dd/mm/YYYY'],
+]
+
+# Upload to Cortex
+cortexfunctions.download_from_cortex(
+    cubo_id='',
+    file_path='',
+    plataform_url='CLIENT.cortex-intelligence.com',
+    username='',
+    password='',
+    data_format=dafault_data_format,
+    columns=columns,
+    filters=filters,
 )
 ```
 

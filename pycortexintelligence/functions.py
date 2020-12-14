@@ -1,6 +1,18 @@
+import datetime
+
 import requests
 
+from pycortexintelligence.core.messages import *
+
 LOADMANAGER = "https://api.cortex-intelligence.com"
+
+
+def _make_url_auth(plataform_url):
+    return "https://{}/service/integration-authorization-service.login".format(plataform_url)
+
+
+def _make_download_url(plataform_url):
+    return 'https://{}/service/integration-cube-service.download?'.format(plataform_url)
 
 
 def _get_sid_bearer_token(auth_endpoint, credentials):
@@ -128,7 +140,7 @@ def upload_to_cortex(**kwargs):
                             "escape": "\/\/",
                             "delimiter": ",",
                             "fileType": "CSV"
-                            }
+                        }
     :return:
     """
     # Read Kwargs
@@ -137,15 +149,17 @@ def upload_to_cortex(**kwargs):
     plataform_url = kwargs.get('plataform_url')
     username = kwargs.get('username')
     password = kwargs.get('password')
-    data_format = kwargs.get('data_format', {"charset": "UTF-8",
-                                             "quote": "\"",
-                                             "escape": "\/\/",
-                                             "delimiter": ",",
-                                             "fileType": "CSV"})
+    data_format = kwargs.get('data_format', {
+        "charset": "UTF-8",
+        "quote": "\"",
+        "escape": "\/\/",
+        "delimiter": ",",
+        "fileType": "CSV"
+    })
 
     # Verify Kwargs
     if cubo_id and file_path and plataform_url and username and password:
-        auth_endpoint = "https://{}/service/integration-authorization-service.login".format(plataform_url)
+        auth_endpoint = _make_url_auth(plataform_url)
         credentials = {"login": str(username), "password": str(password)}
         execution_id, headers = upload_local_2_cube(
             cubo_id=cubo_id,
@@ -157,4 +171,106 @@ def upload_to_cortex(**kwargs):
         response = _execution_history(execution_id, LOADMANAGER, headers)
         return response
     else:
-        raise ValueError('Error validating arguments.')
+        raise ValueError(ERROR_ARGUMENTS_VALIDATION)
+
+
+def download_from_cortex(**kwargs):
+    """
+    :param cubo_id:
+    :param cubo_name:
+    :param plataform_url:
+    :param username:
+    :param password:
+    :param columns:
+    :param file_path:
+    :param data_format:
+    :param filters:
+    :return:
+    """
+    cubo_id = kwargs.get('cubo_id')
+    cubo_name = kwargs.get('cubo_name')
+    plataform_url = kwargs.get('plataform_url')
+    username = kwargs.get('username')
+    password = kwargs.get('password')
+    columns = kwargs.get('columns')
+    file_path = kwargs.get('file_path')
+    data_format = kwargs.get('data_format', {
+        "charset": "UTF-8",
+        "quote": "\"",
+        "escape": "\/\/",
+        "delimiter": ",",
+    })
+    filters = kwargs.get('filters', None)
+    if cubo_id and cubo_name:
+        raise ValueError(DOWNLOAD_ERROR_JUST_ID_OR_NAME)
+    if (cubo_id or cubo_name) and plataform_url and username and password and columns and file_path:
+        # Verify is a ID or Name
+        if cubo_id:
+            cube = '{"id":"' + cubo_id + '"}'
+        else:
+            cube = '{"name":"' + cubo_name + '"}'
+
+        # Columns to Download
+        columns_download = []
+        for column in columns:
+            columns_download.append({
+                "name": column,
+            })
+        columns_download = str(columns_download).replace("'", '"')
+
+        # Need to Apply Filters
+        if filters:
+            filters_download = []
+            for filter in filters:
+                column_name = filter[0]
+                value = filter[1]
+                element = {
+                    "name": column_name,
+                    "type": "SIMPLE",
+                }
+                try:
+                    value = datetime.datetime.strptime(value, "%d/%m/%Y")
+                    element["type"] = "DATE"
+                    element["rangeStart"] = value.strftime("%Y%m%d")
+                    element["rangeEnd"] = value.strftime("%Y%m%d")
+                except ValueError:
+                    try:
+                        value = value.split('-')
+                        date_start = datetime.datetime.strptime(value[0], "%d/%m/%Y")
+                        date_end = datetime.datetime.strptime(value[1], "%d/%m/%Y")
+                        element["type"] = "DATE"
+                        element["rangeStart"] = date_start.strftime("%Y%m%d")
+                        element["rangeEnd"] = date_end.strftime("%Y%m%d")
+                    except ValueError:
+                        element["value"] = value
+                filters_download.append(element)
+            filters_download = str(filters_download).replace("'", '"')
+
+        auth_endpoint = _make_url_auth(plataform_url)
+        credentials = {"login": str(username), "password": str(password)}
+        auth_post = requests.post(auth_endpoint, json=credentials)
+        headers = {
+            'x-authorization-user-id': auth_post.json()['userId'],
+            'x-authorization-token': auth_post.json()['key']
+        }
+        download_endpoint = _make_download_url(plataform_url)
+        payload = {
+            'cube': cube,
+            'charset': data_format['charset'],
+            'delimiter': data_format['delimiter'],
+            'quote': data_format['quote'],
+            'escape': data_format['escape'],
+        }
+        if filters:
+            payload['filters'] = filters_download
+        if columns_download:
+            payload['headers'] = columns_download
+
+        with requests.get(download_endpoint, stream=True, headers=headers, params=payload) as r:
+            r.raise_for_status()
+            with open(file_path, 'wb') as f:
+                for chunk in r.iter_content(chunk_size=8192):
+                    f.write(chunk)
+    else:
+        raise ValueError(ERROR_ARGUMENTS_VALIDATION)
+
