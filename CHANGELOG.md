@@ -16,7 +16,7 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 - Improve error handling of functions
 - Adjust standardization of function nomenclature
 
-## [0.0.10] - 2020-12-14
+## [0.0.10] - 2020-12-22
 
 ### Changed
 - On default project, dont delete the log file.
