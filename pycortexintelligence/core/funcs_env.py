@@ -64,5 +64,3 @@ def delete_temp_files(os_params):
         for filename in os.listdir(folder):
             file_path = os.path.join(folder, filename)
             __delete_file(file_path, os_params)
-    for file in FILES:
-        __delete_file(file, os_params)
