@@ -62,7 +62,7 @@ filters = [
     ['Name of Column B', 'dd/mm/YYYY-dd/mm/YYYY'],
 ]
 
-# Upload to Cortex
+# Download from Cortex
 cortexfunctions.download_from_cortex(
     cubo_id='',
     file_path='',
