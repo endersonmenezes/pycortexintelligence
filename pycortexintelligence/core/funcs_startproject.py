@@ -17,29 +17,26 @@ def write_main_py():
     return """from pycortexintelligence.core.funcs_env import load_env_to_dict, verify_env, delete_temp_files, check_dirs
 from pycortexintelligence.core.config import OUTPUT_FOLDER, DOWNLOADED_FOLDER, LOG_FILE
 from pycortexintelligence.core import messages
-import logging
-
-# Cria arquivo de LOG
-logging.basicConfig(filename=LOG_FILE, encoding='utf-8', level=logging.DEBUG, format='%(asctime)s %(message)s')
 
 # Set specific variables to project
 custom_variables = ['variable_1', 'variable_2']
+print(messages.CUSTOM_VARIABLES_SET)
 
 # Script para pegar automaticamente as variavéis de ambiente.
 OS_PARAMS = load_env_to_dict(new_params_to_check=custom_variables)
-logging.info(messages.VARIABLES_CREATED)
+print(messages.VARIABLES_CREATED)
 
 # Valida se o OS_PARAMS está correto para esse projeto.
 verify_env(OS_PARAMS, new_params_to_check=custom_variables)
-logging.info(messages.OS_PARAMS_CORRECT)
+print(messages.OS_PARAMS_CORRECT)
 
 # Checa os diretórios temporários
 check_dirs()
-logging.info(messages.TEMP_DIRS)
+print(messages.TEMP_DIRS)
 
 # Deleta os arquivos temporários e de output.
 delete_temp_files(os_params=OS_PARAMS)
-logging.info(messages.TEMP_DIRS_EMPTY)
+print(messages.TEMP_DIRS_EMPTY)
 
 # TODO Define a project!
 """
