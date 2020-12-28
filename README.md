@@ -83,7 +83,7 @@ cortex.py --help
 ### Examples
 
 ```bash
-cortex.py startproject --name "Project Name" --sname project_name
+cortex.py startproject --name "Project Name" --sname safe_project_name
 ```
 
 ## How to Contribute
