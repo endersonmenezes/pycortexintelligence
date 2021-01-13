@@ -234,6 +234,7 @@ def download_from_cortex(**kwargs):
                     element["rangeStart"] = value.strftime("%Y%m%d")
                     element["rangeEnd"] = value.strftime("%Y%m%d")
                 except ValueError:
+                    value_temp = value
                     try:
                         value = value.split('-')
                         date_start = datetime.datetime.strptime(value[0], "%d/%m/%Y")
@@ -242,6 +243,7 @@ def download_from_cortex(**kwargs):
                         element["rangeStart"] = date_start.strftime("%Y%m%d")
                         element["rangeEnd"] = date_end.strftime("%Y%m%d")
                     except ValueError:
+                        value = value_temp.split('|')
                         element["value"] = value
                 filters_download.append(element)
             filters_download = str(filters_download).replace("'", '"')

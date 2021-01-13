@@ -58,6 +58,7 @@ columns = ['Name of Column A', 'Name of Column B']
 # OPTIONAL Filters
 filters = [
     ['Name of Column A', 'Value'],
+    ['Name of Column A', 'Value1|Value2|Value3'],
     ['Name of Column B', 'dd/mm/YYYY'],
     ['Name of Column B', 'dd/mm/YYYY-dd/mm/YYYY'],
 ]

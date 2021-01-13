@@ -16,6 +16,11 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 - Improve error handling of functions
 - Adjust standardization of function nomenclature
 
+## [0.0.12] - 2021-01-13
+
+### Added
+- Support to multiple filters on Download Cube.
+
 ## [0.0.10] - 2020-12-22
 
 ### Changed
