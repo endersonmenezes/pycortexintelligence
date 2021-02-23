@@ -20,6 +20,14 @@ python -m twine upload  dist/*
 ```python
 from pycortexintelligence import functions as cortexfunctions
 
+# Timeouts
+# You can set timeouts for the platform according to the size of the uploaded files
+# or use the default
+timeout = {
+    'file': 300,
+    'execution': 600,
+}
+
 # DataFormat are Optionally defined
 dafault_data_format = {
     "charset": "UTF-8",
@@ -36,7 +44,8 @@ cortexfunctions.upload_to_cortex(
     plataform_url='CLIENT.cortex-intelligence.com',
     username='',
     password='',
-    data_format=dafault_data_format
+    data_format=dafault_data_format,
+    timeout=timeout,
 )
 ```
 
