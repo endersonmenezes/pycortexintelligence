@@ -16,6 +16,17 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 - Improve error handling of functions
 - Adjust standardization of function nomenclature
 
+## [0.0.13] - 2021-02-23
+
+### Added
+- Support for timeouts in upload function. View the docs.
+```
+timeout = {
+    'file': 300,
+    'execution': 600,
+}
+```
+
 ## [0.0.12] - 2021-01-13
 
 ### Added

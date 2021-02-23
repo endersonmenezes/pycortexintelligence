@@ -77,16 +77,25 @@ def _execution_history(execution_id, loadmanager, headers):
     return response
 
 
-def upload_local_2_cube(cubo_id, file_path, auth_endpoint, credentials,
+def upload_local_2_cube(cubo_id,
+                        file_path,
+                        auth_endpoint,
+                        credentials,
                         loadmanager="https://api.cortex-intelligence.com",
                         data_format={
                             "charset": "UTF-8",
                             "quote": "\"",
                             "escape": "\/\/",
                             "delimiter": ",",
-                            "fileType": "CSV"},
+                            "fileType": "CSV"
+                        },
+                        timeout={
+                            'file': 300,
+                            'execution': 600,
+                        }
                         ):
     """
+    :param timeout:
     :param cubo_id:
     :param file_path:
     :param auth_endpoint:
@@ -102,8 +111,8 @@ def upload_local_2_cube(cubo_id, file_path, auth_endpoint, credentials,
     # ================ Content ============================
     content = {
         "destinationId": cubo_id,
-        "fileProcessingTimeout": 600000,
-        "executionTimeout": 1200000,
+        "fileProcessingTimeout": int(timeout['file']),
+        "executionTimeout": int(timeout['execution']),
     }
 
     # ================ Get Data Input Id ======================
@@ -156,6 +165,13 @@ def upload_to_cortex(**kwargs):
         "delimiter": ",",
         "fileType": "CSV"
     })
+    timeout = kwargs.get('timeout', {
+        'file': 300,
+        'execution': 600,
+    })
+
+    if 'file' and 'execution' not in timeout.keys():
+        raise ValueError(FORMAT_TIMEOUT)
 
     # Verify Kwargs
     if cubo_id and file_path and plataform_url and username and password:
@@ -166,7 +182,8 @@ def upload_to_cortex(**kwargs):
             file_path=file_path,
             auth_endpoint=auth_endpoint,
             credentials=credentials,
-            data_format=data_format
+            data_format=data_format,
+            timeout=timeout,
         )
         response = _execution_history(execution_id, LOADMANAGER, headers)
         return response
