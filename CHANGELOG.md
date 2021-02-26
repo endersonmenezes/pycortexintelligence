@@ -16,6 +16,14 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 - Improve error handling of functions
 - Adjust standardization of function nomenclature
 
+## [0.0.14] - 2021-02-26
+
+### Added
+- Support for custom loadmanagers in upload function. View the docs.
+```
+loadmanager = "https://api.cortex-intelligence.com"
+```
+
 ## [0.0.13] - 2021-02-23
 
 ### Added
