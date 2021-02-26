@@ -81,7 +81,7 @@ def upload_local_2_cube(cubo_id,
                         file_path,
                         auth_endpoint,
                         credentials,
-                        loadmanager="https://api.cortex-intelligence.com",
+                        loadmanager=LOADMANAGER,
                         data_format={
                             "charset": "UTF-8",
                             "quote": "\"",
@@ -150,6 +150,11 @@ def upload_to_cortex(**kwargs):
                             "delimiter": ",",
                             "fileType": "CSV"
                         }
+    :param timeout: {
+        'file': 300,
+        'execution': 600,
+    }
+    :param loadmanager: LOADMANAGER
     :return:
     """
     # Read Kwargs
@@ -169,6 +174,7 @@ def upload_to_cortex(**kwargs):
         'file': 300,
         'execution': 600,
     })
+    loadmanager = kwargs.get('loadmanager', LOADMANAGER)
 
     if 'file' and 'execution' not in timeout.keys():
         raise ValueError(FORMAT_TIMEOUT)
@@ -184,6 +190,7 @@ def upload_to_cortex(**kwargs):
             credentials=credentials,
             data_format=data_format,
             timeout=timeout,
+            loadmanager=loadmanager,
         )
         response = _execution_history(execution_id, LOADMANAGER, headers)
         return response

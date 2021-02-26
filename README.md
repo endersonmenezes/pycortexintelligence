@@ -20,6 +20,9 @@ python -m twine upload  dist/*
 ```python
 from pycortexintelligence import functions as cortexfunctions
 
+# Loadmanager
+loadmanager = 'https://api.cortex-intelligence.com'
+
 # Timeouts
 # You can set timeouts for the platform according to the size of the uploaded files
 # or use the default
@@ -46,6 +49,7 @@ cortexfunctions.upload_to_cortex(
     password='',
     data_format=dafault_data_format,
     timeout=timeout,
+    loadmanager=loadmanager,
 )
 ```
 
