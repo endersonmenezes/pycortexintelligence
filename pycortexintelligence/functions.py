@@ -92,6 +92,9 @@ def upload_local_2_cube(cubo_id,
                         timeout={
                             'file': 300,
                             'execution': 600,
+                        },
+                        execution_parameters={
+                            'name': 'LoadManager PyCortex',
                         }
                         ):
     """
@@ -119,7 +122,7 @@ def upload_local_2_cube(cubo_id,
     data_input_id = _get_data_input(content, loadmanager, headers)
 
     # ================ Get Execution Id =======================
-    execution_id = _get_execution_id(data_input_id, content, loadmanager, headers)
+    execution_id = _get_execution_id(data_input_id, execution_parameters, loadmanager, headers)
 
     # ================ Send files =============================
     endpoint = loadmanager + "/execution/" + execution_id + "/file"
@@ -175,6 +178,9 @@ def upload_to_cortex(**kwargs):
         'execution': 600,
     })
     loadmanager = kwargs.get('loadmanager', LOADMANAGER)
+    execution_parameters = kwargs.get('execution_parameters', {
+        'name': 'LoadManager PyCortex',
+    })
 
     if 'file' and 'execution' not in timeout.keys():
         raise ValueError(FORMAT_TIMEOUT)
@@ -191,6 +197,7 @@ def upload_to_cortex(**kwargs):
             data_format=data_format,
             timeout=timeout,
             loadmanager=loadmanager,
+            execution_parameters=execution_parameters,
         )
         response = _execution_history(execution_id, LOADMANAGER, headers)
         return response
