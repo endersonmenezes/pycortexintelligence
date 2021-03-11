@@ -16,6 +16,14 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 - Improve error handling of functions
 - Adjust standardization of function nomenclature
 
+## [0.0.15] - 2021-03-11
+
+### Added
+- Support for paramaters on execution in upload function. View the docs.
+```
+execution_parameters = {'name': 'Name', 'origin': 'Origin is optional, view the docs'}
+```
+
 ## [0.0.14] - 2021-02-26
 
 ### Added
