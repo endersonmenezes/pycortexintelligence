@@ -16,9 +16,30 @@ python -m twine upload  dist/*
 
 ## Cases of Use
 
+### Available Origins
+
+```dictionary
+execution_parameters = {
+  'name': 'Name of your Integrations',
+  'origin': 'Connector',
+}
+
+// If you send this to Execution your data need contain
+// Dates in YYYY-MM-DD HH:MM:SS format
+// Float numbers in XXX.XXX.XXX,YY format
+// 'origin' are optional parameters, if you do not send the platform you will try to guess the formats
+```
+
 ### If you need upload a file to Cortex Application
 ```python
 from pycortexintelligence import functions as cortexfunctions
+
+# Execution Parameters
+# You can define Origin, to inform plataform a bundle of parses.
+execution_parameters = {
+    'name': 'LoadManager PyCortex',
+    # 'origin': 'Connector',
+}
 
 # Loadmanager
 loadmanager = 'https://api.cortex-intelligence.com'
@@ -50,6 +71,7 @@ cortexfunctions.upload_to_cortex(
     data_format=dafault_data_format,
     timeout=timeout,
     loadmanager=loadmanager,
+    execution_parameters=execution_parameters,
 )
 ```
 
