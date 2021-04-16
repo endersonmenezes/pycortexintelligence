@@ -16,6 +16,14 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 - Improve error handling of functions
 - Adjust standardization of function nomenclature
 
+## [0.0.16] - 2021-04-16
+
+### Added
+- Support for paramaters on datainput in upload function. View the docs.
+
+### Fixed
+- Scape parameter correct.
+
 ## [0.0.15] - 2021-03-11
 
 ### Added

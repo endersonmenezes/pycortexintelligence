@@ -85,7 +85,7 @@ def upload_local_2_cube(cubo_id,
                         data_format={
                             "charset": "UTF-8",
                             "quote": "\"",
-                            "escape": "\/\/",
+                            "escape": "\\",
                             "delimiter": ",",
                             "fileType": "CSV"
                         },
@@ -95,6 +95,9 @@ def upload_local_2_cube(cubo_id,
                         },
                         execution_parameters={
                             'name': 'LoadManager PyCortex',
+                        },
+                        datainput_parameters={
+                            'ignoreValidationErrors': False
                         }
                         ):
     """
@@ -114,6 +117,7 @@ def upload_local_2_cube(cubo_id,
     # ================ Content ============================
     content = {
         "destinationId": cubo_id,
+        'ignoreValidationErrors': datainput_parameters['ignoreValidationErrors'],
         "fileProcessingTimeout": int(timeout['file']),
         "executionTimeout": int(timeout['execution']),
     }
@@ -149,7 +153,7 @@ def upload_to_cortex(**kwargs):
     :param data_format: data_format={
                             "charset": "UTF-8",
                             "quote": "\"",
-                            "escape": "\/\/",
+                            "escape": "\\",
                             "delimiter": ",",
                             "fileType": "CSV"
                         }
@@ -169,7 +173,7 @@ def upload_to_cortex(**kwargs):
     data_format = kwargs.get('data_format', {
         "charset": "UTF-8",
         "quote": "\"",
-        "escape": "\/\/",
+        "escape": "\\",
         "delimiter": ",",
         "fileType": "CSV"
     })
@@ -181,8 +185,11 @@ def upload_to_cortex(**kwargs):
     execution_parameters = kwargs.get('execution_parameters', {
         'name': 'LoadManager PyCortex',
     })
+    datainput_parameters = kwargs.get('datainput_parameters', {
+        'ignoreValidationErrors': False
+    })
 
-    if 'file' and 'execution' not in timeout.keys():
+    if 'file' not in timeout.keys() and 'execution' not in timeout.keys():
         raise ValueError(FORMAT_TIMEOUT)
 
     # Verify Kwargs
@@ -198,6 +205,7 @@ def upload_to_cortex(**kwargs):
             timeout=timeout,
             loadmanager=loadmanager,
             execution_parameters=execution_parameters,
+            datainput_parameters=datainput_parameters,
         )
         response = _execution_history(execution_id, LOADMANAGER, headers)
         return response
@@ -228,7 +236,7 @@ def download_from_cortex(**kwargs):
     data_format = kwargs.get('data_format', {
         "charset": "UTF-8",
         "quote": "\"",
-        "escape": "\/\/",
+        "escape": "\\",
         "delimiter": ",",
     })
     filters = kwargs.get('filters', None)

@@ -15,7 +15,14 @@ python -m twine upload  dist/*
 ```
 
 ## Cases of Use
+### DataInput Parameters
 
+```dictionary
+data_input_parameters = {
+    'ignoreValidationErrors': True/False,
+}
+// If you send this parameter, the datainput will ignore errors.
+```
 ### Available Origins
 
 ```dictionary
@@ -41,6 +48,11 @@ execution_parameters = {
     # 'origin': 'Connector',
 }
 
+# DataInput Parameters
+data_input_parameters = {
+    'ignoreValidationErrors': True,
+}
+
 # Loadmanager
 loadmanager = 'https://api.cortex-intelligence.com'
 
@@ -56,7 +68,7 @@ timeout = {
 dafault_data_format = {
     "charset": "UTF-8",
     "quote": "\"",
-    "escape": "\/\/",
+    "escape": "\\",
     "delimiter": ",",
     "fileType": "CSV"
 }
